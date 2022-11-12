@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://ws-hospital.azurewebsites.net/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="https://ws-hospital.azurewebsites.net/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://ws-hospital.azurewebsites.net/">
+      <s:element name="servicioweb_consultaproveedor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nitProveedor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="codigoPaciente" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fechaNacimiento" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="fechaInicioCobertura" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="servicioweb_consultaproveedorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="servicioweb_consultaproveedorResult" type="tns:WS_CONSULTAPROVEEDOR" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WS_CONSULTAPROVEEDOR">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="nitProveedor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="codigoPacienteConsultado" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="fechaCoberturaConsultada" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="respuestaServicioWeb" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="fechaConsulta" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="NitValido" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="descNitConsultado" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="servicioweb_consultaafiliado">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoPaciente" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fechaNacimiento" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="servicioweb_consultaafiliadoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="servicioweb_consultaafiliadoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="servicioweb_consultaproveedorSoapIn">
+    <wsdl:part name="parameters" element="tns:servicioweb_consultaproveedor" />
+  </wsdl:message>
+  <wsdl:message name="servicioweb_consultaproveedorSoapOut">
+    <wsdl:part name="parameters" element="tns:servicioweb_consultaproveedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="servicioweb_consultaafiliadoSoapIn">
+    <wsdl:part name="parameters" element="tns:servicioweb_consultaafiliado" />
+  </wsdl:message>
+  <wsdl:message name="servicioweb_consultaafiliadoSoapOut">
+    <wsdl:part name="parameters" element="tns:servicioweb_consultaafiliadoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSHospitalSoap">
+    <wsdl:operation name="servicioweb_consultaproveedor">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">verificar si el paciente (afiliado al seguro médico) se encuentra activo</wsdl:documentation>
+      <wsdl:input message="tns:servicioweb_consultaproveedorSoapIn" />
+      <wsdl:output message="tns:servicioweb_consultaproveedorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="servicioweb_consultaafiliado">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consulta afiliado</wsdl:documentation>
+      <wsdl:input message="tns:servicioweb_consultaafiliadoSoapIn" />
+      <wsdl:output message="tns:servicioweb_consultaafiliadoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHospitalSoap" type="tns:WSHospitalSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="servicioweb_consultaproveedor">
+      <soap:operation soapAction="https://ws-hospital.azurewebsites.net/servicioweb_consultaproveedor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="servicioweb_consultaafiliado">
+      <soap:operation soapAction="https://ws-hospital.azurewebsites.net/servicioweb_consultaafiliado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSHospitalSoap12" type="tns:WSHospitalSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="servicioweb_consultaproveedor">
+      <soap12:operation soapAction="https://ws-hospital.azurewebsites.net/servicioweb_consultaproveedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="servicioweb_consultaafiliado">
+      <soap12:operation soapAction="https://ws-hospital.azurewebsites.net/servicioweb_consultaafiliado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSHospital">
+    <wsdl:port name="WSHospitalSoap" binding="tns:WSHospitalSoap">
+      <soap:address location="https://ws-hospital.azurewebsites.net/WSHospital.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSHospitalSoap12" binding="tns:WSHospitalSoap12">
+      <soap12:address location="https://ws-hospital.azurewebsites.net/WSHospital.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
